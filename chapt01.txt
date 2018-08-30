@@ -1,0 +1,31 @@
+1.Tensorflow是基于张量的管理  张量阶、维数、形状
+2.tensorflow数据类型：变量(需要更新迭代的参数例如权重weight、偏移basis)、常量、placeholder(占位，主要在训练模型用于feed)
+变量：1.要声明数据类型2.一定要初始化  run(tf.global_variables_initializer())3.变量值可一直保存，而placeholder的值只在数据流图运行中存在
+3.tensorflow的数据流图：
+主要是由节点和边构成
+节点实现数学操作，同时也表示数据或变量的供给（feed），或输出结果
+边主要描述节点之间的输入输出关系。这些数据边专门传输张量。节点被分配给计算设备，并且一旦其输入边上的所有张量到位，则开始异步地并行执行。
+4.tensorflow与numpy相互操作
+	4.1 tensor==>numpy:
+	import tensorflow as tf
+	import numpy as np 
+	x=tf.constant(np.random.rand(32).astype(np.float32))
+	sess=tf.Session()
+	result=x.eval(session=sess)
+	4.2 numpy==>tensor:
+	x=np.array([[1.,2.,3.],[4.,5.,6.]])
+	result=tf.convert_to_tensor(x,dtype=tf.float32)
+5.tf.squeeze 删除维度1: [[[2,3],[4,5]]]==>[[2,3],[4,5]],[[1],[2],[3]]==>[1,2,3]
+  tf.expand_dims 添加维度 :[[2,3],[4,5]]==>[[[2,3],[4,5]]]
+  tf.slice 切片 tf.slice(data,begin,size) 
+  例如:x=tf.constant([[1,2,3],[4,5,6],[7,8,9]] tf.slice(x,[1,1],[2,2]) 从第二行第二个元素开始，切出2*2矩阵  则是[[5,6],[8,9]]
+  tf.split(axis,num,data)分割，指沿axis轴，均等分割为num份
+  tf.pad(data,array)
+  array([[0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 2, 3, 4, 0, 0],
+          [0, 0, 5, 6, 7, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0]], dtype=int32)
+
+可以看到，上，下，左，右分别填充了1,1,2,2行刚好和paddings=[[1,1],[2,2]]相等，零填充
+  tf.pack  打包  a=tf.constant([1,2,3]) b=tf.constant([4,5,6]) tf.pack(a,b).eval()=[[1,2,3],[4,5,6]]
+  tf.unpack 解包 tf.unpack([[1,2,3],[4,5,6]])=[array([1,2,3],dtype=int32),array([4,5,6],dtype=int32)]
