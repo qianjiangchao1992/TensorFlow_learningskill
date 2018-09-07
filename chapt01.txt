@@ -29,3 +29,6 @@
 可以看到，上，下，左，右分别填充了1,1,2,2行刚好和paddings=[[1,1],[2,2]]相等，零填充
   tf.pack  打包  a=tf.constant([1,2,3]) b=tf.constant([4,5,6]) tf.pack(a,b).eval()=[[1,2,3],[4,5,6]]
   tf.unpack 解包 tf.unpack([[1,2,3],[4,5,6]])=[array([1,2,3],dtype=int32),array([4,5,6],dtype=int32)]
+  
+  
+
